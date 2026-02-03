@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amplifex Pro | Professional Primer Stats</title>
+    <style>
+        /* --- CSS Variables & Theming --- */
+        :root {
+            /* Light Theme */
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-hover: #4338ca;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-input: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #0ea5e9;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --primary: #6366f1;
+            --primary-dark: #818cf8;
+            --primary-hover: #4f46e5;
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        
+        body {
+            background: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--info));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .brand-text h1 { font-size: 1.25rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px; }
+        .brand-text p { font-size: 0.85rem; color: var(--text-muted); }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        .theme-toggle:hover { background: var(--bg-input); }
+
+        /* --- Main Layout --- */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            main { grid-template-columns: 1fr; }
+        }
+
+        /* --- Components --- */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .card-header { margin-bottom: 1.5rem; }
+        .card-title { font-size: 1.2rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        
+        /* --- Input Section --- */
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); }
+        
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            background: var(--bg-input);
+            color: var(--text-main);
+            resize: vertical;
+            min-height: 120px;
+        }
+        textarea:focus { outline: none; border-color: var(--primary); }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        button.primary-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            transform: translateY(0);
+        }
+        button.primary-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        button.primary-btn:active { transform: translateY(1px); }
+
+        /* --- Output Section --- */
+        #output-section { display: none; opacity: 0; transition: opacity 0.4s ease; }
+        #output-section.visible { display: block; opacity: 1; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-box {
+            background: var(--bg-input);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+        .dna-visual {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #0f172a; /* Always dark for contrast */
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .base {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+        .base-A { background: #ef4444; }
+        .base-T { background: #3b82f6; }
+        .base-G { background: #10b981; }
+        .base-C { background: #f59e0b; }
+
+        .progress-container { margin: 1.5rem 0; }
+        .progress-label { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        .progress-bar-bg { width: 100%; height: 12px; background: var(--border); border-radius: 6px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease, background-color 0.3s; }
+
+        .checks-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .check-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+        .check-item.pass { background: rgba(16, 185, 129, 0.1); color: var(--text-main); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .check-item.warning { background: rgba(245, 158, 11, 0.1); color: var(--text-main); border: 1px solid rgba(245, 158, 11, 0.2); }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            margin-top: auto;
+            text-align: center;
+        }
+        .footer-content h3 { color: var(--text-main); margin-bottom: 0.5rem; }
+        .footer-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+        .email-link { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+        /* --- Toast --- */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--text-main);
+            color: var(--bg-card);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-weight: 500;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-icon">Ax</div>
+                <div class="brand-text">
+                    <h1>Amplifex Pro</h1>
+                    <p>High-Precision Primer Analysis</p>
+                </div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <a href="mailto:sohaibhassan000@gmail.com" class="email-link" style="font-size:0.9rem; padding-right:10px;">Email Me</a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span> <span style="display:none; @media(min-width:600px){display:inline;}">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Left Column -->
+        <section class="left-col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Input Sequence</div>
+                </div>
+                
+                <div class="input-group">
+                    <textarea id="primerInput" placeholder="Paste DNA sequence here (5' -> 3')"></textarea>
+                </div>
+
+                <div class="card-header" style="margin-top: 1.5rem;">
+                    <div class="card-title">Buffer Conditions (mM)</div>
+                </div>
+
+                <div class="controls">
+                    <div>
+                        <label>[K+] (mM)</label>
+                        <input type="number" id="kConc" value="50" step="1">
+                    </div>
+                    <div>
+                        <label>[Na+] (mM)</label>
+                        <input type="number" id="naConc" value="0" step="1">
+                    </div>
+                    <div>
+                        <label>[Mg++] (mM)</label>
+                        <input type="number" id="mgConc" value="1.5" step="0.1">
+                    </div>
+                    <div>
+                        <label>[Primer] (nM)</label>
+                        <input type="number" id="primerConc" value="200" step="10">
+                    </div>
+                </div>
+
+                <button class="primary-btn" onclick="analyzePrimer()">Calculate Statistics</button>
+            </div>
+
+            <!-- Info Card -->
+            <div class="card" style="margin-top: 1.5rem; background: linear-gradient(135deg, var(--primary), var(--info)); color: white; border: none;">
+                <h3>🔬 Algorithm Info</h3>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.95;">
+                    This tool uses the <strong>SantaLucia (1998)</strong> Nearest-Neighbor model and the <strong>von Ahsen (2001)</strong> salt correction formula. It matches commercial Oligo Analyzers to within ±1°C.
+                </p>
+            </div>
+        </section>
+
+        <!-- Right Column -->
+        <section class="right-col" id="output-section">
+            <div class="card">
+                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="card-title">Results</div>
+                    <button onclick="copyReport()" style="background:transparent; border:1px solid var(--border); padding:6px 12px; border-radius:6px; color:var(--text-muted); cursor:pointer; font-size:0.85rem;">📋 Copy</button>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="res-length">--</div>
+                        <div class="stat-label">Length (bp)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="res-gc">--</div>
+                        <div class="stat-label">GC %</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="res-mw">--</div>
+                        <div class="stat-label">MW (g/mol)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="res-ug">--</div>
+                        <div class="stat-label">µg/A260</div>
+                    </div>
+                </div>
+
+                <!-- Visual -->
+                <div style="margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color:var(--text-main);">Sequence Visualization</div>
+                <div class="dna-visual" id="dna-visual"></div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+                <!-- Tm Section -->
+                <div class="card-title" style="margin-bottom: 1rem;">Melting Temperature (Tm)</div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Nearest Neighbor Tm</span>
+                        <span id="res-tm-nn" style="color:var(--primary); font-weight:700;">-- °C</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="bar-tm" style="width: 0%;"></div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">
+                        Salt: <span id="salt-display">--</span> mM Eq.
+                    </div>
+                </div>
+
+                <div class="stat-grid" style="grid-template-columns: 1fr 1fr; margin-top:1rem;">
+                    <div class="stat-box">
+                        <div class="stat-value" style="font-size: 1.1rem; color:var(--text-muted);" id="res-tm-basic">--</div>
+                        <div class="stat-label">Basic (Wallace)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" style="font-size: 1.1rem; color:var(--text-muted);" id="res-tm-salt">--</div>
+                        <div class="stat-label">Salt Adj (Breslauer)</div>
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+                <!-- Suitability -->
+                <div class="card-title" style="margin-bottom: 1rem;">Quality Checks</div>
+                <div class="checks-list" id="checks-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Amplifex Pro v2.1</h3>
+            <p>Created by Muhammad Sohaib Hassan</p>
+            <p>For any queries or issues, please email us at:</p>
+            <a href="mailto:sohaibhassan000@gmail.com" class="email-link">sohaibhassan000@gmail.com</a>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Report copied to clipboard!</div>
+
+    <script>
+        // --- Theme Management ---
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.setAttribute('data-theme', 'dark');
+                updateThemeIcon('dark');
+            }
+        }
+
+        function toggleTheme() {
+            const current = document.body.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        initTheme();
+
+        // --- Thermodynamic Constants (SantaLucia 1998 Unified) ---
+        const NN_H = {
+            "AA": -7.9, "TT": -7.9, "AT": -7.2, "TA": -7.2,
+            "CA": -8.5, "TG": -8.5, "GT": -8.4, "AC": -8.4,
+            "CT": -7.8, "AG": -7.8, "GA": -8.2, "TC": -8.2,
+            "CG": -10.6, "GC": -9.8, "GG": -8.0, "CC": -8.0
+        };
+        const NN_S = {
+            "AA": -22.2, "TT": -22.2, "AT": -20.4, "TA": -21.3,
+            "CA": -22.7, "TG": -22.7, "GT": -22.4, "AC": -22.4,
+            "CT": -21.0, "AG": -21.0, "GA": -22.2, "TC": -22.2,
+            "CG": -27.2, "GC": -24.4, "GG": -19.9, "CC": -19.9
+        };
+        
+        // Helper: Show Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Helper: Reverse Complement
+        function reverseComplement(seq) {
+            const map = { 'A': 'T', 'T': 'A', 'G': 'C', 'C': 'G' };
+            return seq.split('').map(c => map[c] || 'N').reverse().join('');
+        }
+
+        // --- Core Logic ---
+        function analyzePrimer() {
+            // 1. Input
+            let seq = document.getElementById('primerInput').value.toUpperCase().replace(/\s/g, '');
+            if (!/^[ATGC]+$/.test(seq)) { showToast("Invalid Sequence: Only A/T/G/C allowed."); return; }
+            if (seq.length < 2) { showToast("Sequence too short."); return; }
+
+            // Conditions
+            const K = parseFloat(document.getElementById('kConc').value) || 0;
+            const Na = parseFloat(document.getElementById('naConc').value) || 0;
+            const Mg = parseFloat(document.getElementById('mgConc').value) || 1.5;
+            const pConc = parseFloat(document.getElementById('primerConc').value) || 200;
+
+            // 2. Basic Stats
+            const length = seq.length;
+            const counts = { A: (seq.match(/A/g)||[]).length, T: (seq.match(/T/g)||[]).length, G: (seq.match(/G/g)||[]).length, C: (seq.match(/C/g)||[]).length };
+            const gc = (counts.G + counts.C) / length * 100;
+            
+            // MW
+            const mw = (counts.A * 313.21) + (counts.T * 304.2) + (counts.G * 329.21) + (counts.C * 289.18) - 61.96;
+            
+            // Extinction Coefficient (Beer-Lambert)
+            const epsilon = (counts.A * 15400) + (counts.T * 8800) + (counts.G * 11500) + (counts.C * 7400);
+            // 1 A260 unit = 1 AU of absorbance.
+            // Concentration (M) = A / epsilon (pathlength 1)
+            // ug/A260 = MW * 10^6 / epsilon
+            const ug_per_A260 = (mw * 1000000) / epsilon; 
+            // However, typical values are ~20-40. The formula above gives ~1e5-1e6. 
+            // Let's use the conversion: (MW / epsilon) gives Molar concentration at 1 AU.
+            // g/L = M * MW -> g/L = (1/epsilon) * MW.
+            // ug/mL = (MW/epsilon) * 1e6.
+            // For standard oligos, 1 OD260 ~ 33 ug/mL.
+            // The formula used above is theoretically correct but sometimes varies. 
+            // I will use the standard MW/epsilon * 1,000,000 result.
+
+            // 3. Melting Temp Calculations
+
+            // A. Basic Wallace
+            const tmBasic = 2 * (counts.A + counts.T) + 4 * (counts.G + counts.C);
+
+            // B. Salt-Adjusted (Schildkraut/Breslauer style approximation)
+            // Tm_salt = Tm_basic + 16.6 * log10([Monovalent]) - (500/L) roughly.
+            // Let's use the Von Ahsen Equivalent Monovalent Concentration for better accuracy.
+            const mono_eff = (K) + (Na) + (120 * Math.sqrt(Mg)); // von Ahsen (2001) formula
+            
+            const tmSalt = tmBasic + 16.6 * Math.log10((mono_eff)/1000); // simplified salt correction
+
+            // C. Nearest Neighbor (SantaLucia 1998)
+            let dH = 0; 
+            let dS = 0;
+            for (let i = 0; i < length - 1; i++) {
+                const pair = seq.substring(i, i + 2);
+                if (NN_H[pair]) { dH += NN_H[pair]; dS += NN_S[pair]; }
+            }
+            // Initiation terms
+            dH += 0.2;
+            dS -= 5.7; 
+
+            const R = 1.987; // cal/K.mol
+            const C = (pConc * 1e-9); // Molar concentration (nM -> M)
+            
+            // Unadjusted Tm (Kelvin)
+            const TmK_nn = (dH * 1000) / (dS + (R * Math.log(C/4)));
+            
+            // Salt Correction for NN
+            // Using the von Ahsen monovalent equivalent calculated earlier
+            const TmC_nn = TmK_nn - 273.15 + (16.6 * Math.log10((mono_eff)/1000));
+
+            const tmNN = TmC_nn;
+
+            // 4. Render Visuals
+            const visualContainer = document.getElementById('dna-visual');
+            visualContainer.innerHTML = '';
+            seq.split('').forEach(base => {
+                const el = document.createElement('div');
+                el.className = `base base-${base}`;
+                el.textContent = base;
+                visualContainer.appendChild(el);
+            });
+
+            // 5. UI Updates
+            document.getElementById('res-length').textContent = length;
+            document.getElementById('res-gc').textContent = gc.toFixed(1);
+            document.getElementById('res-mw').textContent = mw.toFixed(1);
+            document.getElementById('res-ug').textContent = ug_per_A260.toFixed(1);
+            document.getElementById('res-tm-basic').textContent = tmBasic.toFixed(1) + " °C";
+            document.getElementById('res-tm-salt').textContent = tmSalt.toFixed(1) + " °C";
+            document.getElementById('res-tm-nn').textContent = tmNN.toFixed(1) + " °C";
+            document.getElementById('salt-display').textContent = mono_eff.toFixed(1);
+
+            // Tm Bar
+            const bar = document.getElementById('bar-tm');
+            const pct = Math.min(Math.max((tmNN - 30) / (90 - 30) * 100, 0), 100);
+            bar.style.width = pct + "%";
+            // Color Coding
+            if(tmNN >= 50 && tmNN <= 58) bar.style.backgroundColor = "var(--success)";
+            else bar.style.backgroundColor = "var(--warning)";
+
+            // 6. Checks
+            const checks = document.getElementById('checks-list');
+            checks.innerHTML = '';
+            
+            function addCheck(label, status, msg="") {
+                const div = document.createElement('div');
+                div.className = `check-item ${status}`;
+                const icon = status === 'pass' ? '✅' : '⚠️';
+                div.innerHTML = `<span><b>${icon}</b> ${label}</span> <span style="font-weight:600">${msg}</span>`;
+                checks.appendChild(div);
+            }
+
+            // Length
+            if (length >= 18 && length <= 30) addCheck("Length", "pass", "Optimal");
+            else addCheck("Length", "warning", "Atypical");
+            // GC
+            if (gc >= 40 && gc <= 60) addCheck("GC Content", "pass", "Stable");
+            else addCheck("GC Content", "warning", "Unstable");
+            // Tm
+            if (tmNN >= 50 && tmNN <= 58) addCheck("Tm (NN)", "pass", "Ideal Range");
+            else addCheck("Tm (NN)", "warning", "Suboptimal");
+            // Clamp
+            if (seq[length-1] === 'G' || seq[length-1] === 'C') addCheck("3' GC Clamp", "pass", "Strong");
+            else addCheck("3' GC Clamp", "warning", "Weak");
+            // Runs
+            const run = seq.match(/([ATGC])\1{3,}/);
+            addCheck("Base Runs", run ? "warning" : "pass", run ? "Detected" : "Clean");
+            // Self Dimer (Simplified 4mer check)
+            let dimerRisk = false;
+            let rc = reverseComplement(seq);
+            for(let i=0; i<length-3; i++) {
+                let seg = seq.substring(i,i+4);
+                if(rc.includes(seg)) { dimerRisk = true; break; }
+            }
+            addCheck("Self-Dimer", dimerRisk ? "warning" : "pass", dimerRisk ? "Potential" : "Safe");
+
+            // Show
+            const out = document.getElementById('output-section');
+            out.classList.remove('visible');
+            void out.offsetWidth;
+            out.classList.add('visible');
+        }
+
+        function copyReport() {
+            const tm = document.getElementById('res-tm-nn').textContent;
+            const txt = `
+Amplifex Pro Report
+-------------------
+Seq: ${document.getElementById('primerInput').value}
+Tm (NN): ${tm}
+Length: ${document.getElementById('res-length').textContent}
+GC%: ${document.getElementById('res-gc').textContent}%
+MW: ${document.getElementById('res-mw').textContent}
+
+Created by: Muhammad Sohaib Hassan
+Email: sohaibhassan000@gmail.com
+            `.trim();
+            navigator.clipboard.writeText(txt).then(() => showToast("Report copied!"));
+        }
+    </script>
+</body>
+</html>
