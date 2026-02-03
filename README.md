@@ -9,18 +9,19 @@ Modern UI: Clean, responsive interface with a Dark Mode toggle.
 Instant Visualization: See your primer sequence color-coded by base pair (A, T, G, C).
 Quality Checks: Automatically detects potential issues like Hairpins, Self-Dimers, and GC Clamp status.
 Client-Side: Runs 100% in the browser. No backend server needed. Safe and fast.
+
 🚀 How to Use
-Since this tool is a single HTML file, you don't need to install Python or Node.js.
+Visit this link https://mshassan123.github.io/-Amplifex-Pro/ 
 
 Download: Save the index.html file.
 Run: Open index.html in any web browser (Chrome, Firefox, Safari, Edge).
 Host: To use as a website, simply upload the index.html file to GitHub Pages or Netlify.
+
 📊 Technical Details
 Algorithm: SantaLucia Unified NN Parameters.
 Salt Correction: von Ahsen Formula (accounts for K+, Na+, and Mg++).
 Tech Stack: Vanilla HTML, CSS, and JavaScript.
-📧 Support
-For any queries, suggestions, or issues, please contact:
 
-Muhammad Sohaib Hassan
+📧 Support
+For any queries, suggestions, or issues, please contact us
 Email: sohaibhassan000@gmail.com
